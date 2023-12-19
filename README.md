@@ -1,9 +1,3 @@
----
-runme:
-  id: 01HJ0XCZP1TNZ0ZB2N52HKPX64
-  version: v2.0
----
-
 # YT Downloader
 
 This is an educational project showcasing how to create a YouTube downloader using Node.js and TypeScript.
@@ -46,4 +40,4 @@ Contributions are welcome. Please open an issue or a pull request to suggest cha
 
 ## Disclaimer
 
-This project is purely educational and should not be used to download and distribute copyrighted content without permission.
+This project is purely educational and should not be used to download and distribute copyrighted content without permission.
