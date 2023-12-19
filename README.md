@@ -12,6 +12,7 @@ This is an educational project showcasing how to create a YouTube downloader usi
 
 The project follows the following structure:
 
+```
 .
 ├── .gitignore
 ├── package.json
@@ -21,6 +22,7 @@ The project follows the following structure:
 │   └── middlewares/
 │       └── asyncMiddleware.ts
 └── tsconfig.json
+```
 
 ## How to Run the Project
 
@@ -44,4 +46,4 @@ Contributions are welcome. Please open an issue or a pull request to suggest cha
 
 ## Disclaimer
 
-This project is purely educational and should not be used to download and distribute copyrighted content without permission.
+This project is purely educational and should not be used to download and distribute copyrighted content without permission.
