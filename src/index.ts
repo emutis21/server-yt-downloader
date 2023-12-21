@@ -1,7 +1,7 @@
-import express from 'express'
 import ytdl from 'ytdl-core'
 import { asyncMiddleware } from './middlewares/asyncMiddleware'
 import cors from 'cors'
+import express, { Request, Response } from 'express'
 
 const app = express()
 
@@ -17,29 +17,42 @@ const PORT = process.env.PORT ?? 3000
 
 app.get(
   '/download',
-  asyncMiddleware(async (req, res, next) => {
+  asyncMiddleware(async (req: Request, res: Response) => {
     try {
-      const url = req.query.url
-      const videoId = ytdl.getURLVideoID(url as string)
-      const metaInfo = await ytdl.getInfo(url as string)
+      const url: string = req.query.url as string
 
-      const filteredFormats = metaInfo.formats.filter((format) => format.hasVideo && format.hasAudio)
-
-      if (filteredFormats.length === 0) {
-        res.status(500).send({ error: 'No hay formatos disponibles con video y audio.' })
+      if (url === undefined || url === null || url.trim() === '') {
+        res.status(400).send({ error: 'URL parameter is missing.' })
         return
       }
 
-      const data = {
-        url: `https://www.youtube.com/embed/${videoId}`,
-        info: filteredFormats
+      const videoId = ytdl.getURLVideoID(url)
+
+      try {
+        const metaInfo = await ytdl.getInfo(url)
+        const title = metaInfo.videoDetails.title.replace(/[^a-zA-Z0-9 áéíóúÁÉÍÓÚÑñ]/g, '')
+
+        const filteredFormats = metaInfo.formats.filter((format) => format.hasVideo && format.hasAudio)
+
+        if (filteredFormats.length === 0) {
+          res.status(500).send({ error: 'No hay formatos disponibles con video y audio.' })
+          return
+        }
+
+        const data = {
+          url: `https://www.youtube.com/embed/${videoId}`,
+          info: filteredFormats,
+          title
+        }
+
+        res.send(data)
+      } catch (err) {
+        console.error('Error fetching video info from YouTube:', err)
+        res.status(500).send({ error: 'Error fetching video info from YouTube.' })
       }
-
-      res.send(data)
     } catch (err) {
-      next(err)
-
-      console.log(err)
+      console.error(err)
+      res.status(500).send({ error: 'Internal Server Error' })
     }
   })
 )
