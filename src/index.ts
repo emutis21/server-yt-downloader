@@ -5,7 +5,12 @@ import express, { Request, Response } from 'express'
 
 const app = express()
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:5173']
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:8080',
+  'http://localhost:5173',
+  'https://yt-downloader-xi.vercel.app'
+]
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins
@@ -58,5 +63,5 @@ app.get(
 )
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`)
+  console.log(`Server is running on port http://localhost:${PORT}, http://192.168.1.55:${PORT}`)
 })
