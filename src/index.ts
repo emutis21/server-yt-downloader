@@ -45,7 +45,7 @@ app.get(
         }
 
         const data = {
-          url: `https://www.youtube.com/embed/${videoId}`,
+          url: videoId,
           info: filteredFormats,
           title
         }
